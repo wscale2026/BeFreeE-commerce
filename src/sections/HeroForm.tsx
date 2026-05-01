@@ -96,9 +96,30 @@ export default function HeroForm() {
     return saved === "true";
   });
   const [shake, setShake] = useState(false);
+  const [fieldError, setFieldError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
   const [direction, setDirection] = useState<"next" | "prev">("next");
   const [animating, setAnimating] = useState(false);
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
+
+  // ── Validators ────────────────────────────────────────────────
+  const validateEmail = (v: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+
+  const validatePhone = (v: string) => {
+    // Accepts international format: optional + then 7-15 digits (spaces/dashes allowed)
+    const clean = v.replace(/[\s\-().]/g, "");
+    return /^\+?[0-9]{7,15}$/.test(clean);
+  };
+
+  const getFieldError = (id: keyof FormData, val: unknown): string | null => {
+    if (typeof val !== "string" || val.trim() === "") return null;
+    if (id === "email" && !validateEmail(val))
+      return "Adresse e-mail invalide. Ex : vous@exemple.com";
+    if (id === "whatsapp" && !validatePhone(val))
+      return "Numéro invalide. Format attendu : +33 6 12 34 56 78";
+    return null;
+  };
 
   // Persist state
   useEffect(() => {
@@ -119,6 +140,7 @@ export default function HeroForm() {
   const value = formData[currentQ.id];
 
   const handleNext = useCallback(() => {
+    setSubmitted(true);
     const isArray = Array.isArray(value);
     const isEmpty = isArray ? (value as string[]).length === 0 : !value || (typeof value === "string" && value.trim() === "");
 
@@ -127,6 +149,20 @@ export default function HeroForm() {
       setTimeout(() => setShake(false), 400);
       return;
     }
+
+    // Format validation for email & phone
+    const formatErr = getFieldError(currentQ.id, value);
+    if (formatErr) {
+      setFieldError(formatErr);
+      setShake(true);
+      setTimeout(() => setShake(false), 400);
+      return;
+    }
+    setFieldError(null);
+
+    // Reset submitted state before going to next step
+    setSubmitted(false);
+
     if (step < QUESTIONS.length - 1) {
       setDirection("next");
       setAnimating(true);
@@ -142,7 +178,7 @@ export default function HeroForm() {
         setAnimating(false);
       }, 300);
     }
-  }, [value, step]);
+  }, [value, step, currentQ.id]);
 
   const handlePrev = useCallback(() => {
     if (showSummary) {
@@ -170,6 +206,11 @@ export default function HeroForm() {
   };
 
   const updateValue = (val: string) => {
+    // Update error live only if user already tried to submit
+    if (submitted) {
+      const err = getFieldError(currentQ.id, val);
+      setFieldError(err);
+    }
     setFormData((prev) => {
       const currentVal = prev[currentQ.id];
       
@@ -220,7 +261,7 @@ export default function HeroForm() {
   return (
     <section
       id="hero-form"
-      className="relative pt-28 md:pt-36 pb-16 md:pb-24 bg-gradient-to-b from-white to-brand-gray overflow-hidden"
+      className="relative pt-28 md:pt-36 pb-16 md:pb-24 bg-gradient-to-b from-[#f0f4ff] to-[#e8eef8] overflow-hidden"
     >
       {/* Decorative Blobs */}
       <div className="absolute top-1/4 -right-24 w-96 h-96 bg-brand-blue/10 rounded-full blur-[100px] opacity-60 pointer-events-none" />
@@ -230,7 +271,7 @@ export default function HeroForm() {
         {/* Welcome */}
         <div className="text-center mb-8 md:mb-12 animate-fade-in-up">
           <p className="text-sm md:text-base font-medium text-brand-blue mb-3 tracking-wide uppercase">
-            Soyez Libre
+            <i>Soyez Libre ~ Be Free</i>
           </p>
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-brand-dark tracking-tight leading-tight mb-4">
             Vérifiez votre éligibilité
@@ -244,8 +285,14 @@ export default function HeroForm() {
 
 
         {/* Form Card */}
-        <div className="max-w-4xl mx-auto mb-10 group shadow-card">
-          <div className="bg-white rounded-3xl shadow-card border border-gray-100 overflow-hidden transition-all duration-500 transform group-hover:-translate-y-1">
+        <div className="max-w-4xl mx-auto mb-10 group">
+          <div
+            className="bg-white rounded-3xl border border-gray-100 overflow-hidden transition-all duration-500 transform hover:-translate-y-1"
+            style={{
+              boxShadow:
+                "0 2px 8px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.07), 0 24px 64px rgba(0,0,0,0.06)",
+            }}
+          >
             {/* Progress Bar */}
             <div className="h-1 bg-gray-100 w-full">
               <div
@@ -347,8 +394,30 @@ export default function HeroForm() {
                           onChange={(e) => updateValue(e.target.value)}
                           onKeyDown={handleKeyDown}
                           placeholder={currentQ.placeholder}
-                          className="w-full bg-transparent border-b-2 border-gray-200 focus:border-brand-blue outline-none text-lg py-3 px-1 transition-colors"
+                          className={`w-full bg-transparent border-b-2 outline-none text-lg py-3 px-1 transition-colors ${
+                            fieldError
+                              ? "border-red-400 focus:border-red-500"
+                              : "border-gray-200 focus:border-brand-blue"
+                          }`}
                         />
+                        {/* Inline validation feedback — only after submit attempt */}
+                        {submitted && fieldError && (
+                          <div className="flex items-center gap-1.5 mt-2 text-red-500 text-sm font-medium animate-fade-in-up">
+                            <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                            </svg>
+                            {fieldError}
+                          </div>
+                        )}
+                        {/* Valid indicator — only after submit attempt */}
+                        {submitted && !fieldError && (currentQ.id === "email" || currentQ.id === "whatsapp") && typeof value === "string" && value.trim() !== "" && (
+                          <div className="flex items-center gap-1.5 mt-2 text-green-500 text-sm font-medium">
+                            <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                            Format valide ✓
+                          </div>
+                        )}
                         <div className="mt-8 flex justify-center">
                           <button
                             onClick={handleNext}

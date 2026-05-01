@@ -29,11 +29,12 @@ export default function Navigation() {
     >
       <div className="section-container flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
-        <div className="flex items-center gap-1">
-          <span className="text-xl md:text-2xl font-extrabold text-brand-dark tracking-tight">
-            Be Free{" "}
-            <span className="text-brand-blue">E</span>-Commerce
-          </span>
+        <div className="flex items-center">
+          <img
+            src="/logo.png"
+            alt="Be Free E-Commerce"
+            className="h-10 md:h-12 w-auto object-contain"
+          />
         </div>
 
         {/* Desktop Links */}

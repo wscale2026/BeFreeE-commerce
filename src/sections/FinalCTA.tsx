@@ -22,7 +22,7 @@ export default function FinalCTA() {
           Passez à l'action.
         </p>
         <p className="text-base text-blue-200 max-w-lg mx-auto mb-10">
-          En 2 minutes, vous saurez exactement ce dont vous avez besoin pour lancer
+          Dès maintenant, découvrez exactement ce dont vous avez besoin pour lancer
           ou scaler votre business e-commerce.
         </p>
 

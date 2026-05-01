@@ -52,28 +52,28 @@ export default function Timeline() {
           {/* Desktop Timeline */}
           <div className="hidden md:block">
             {/* Line */}
-            <div className="relative flex items-start justify-between">
-              <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-200" />
+            <div className="relative flex items-stretch justify-between">
+              <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-200/60" />
               {STEPS.map((step, idx) => (
                 <div
                   key={step.month}
-                  className={`relative flex flex-col items-center text-center w-1/3 ${
+                  className={`relative flex flex-col items-center text-center w-1/3 group px-2 ${
                     visible ? "animate-fade-in-up" : "opacity-0"
                   }`}
                   style={{ animationDelay: `${idx * 200}ms` }}
                 >
                   {/* Dot */}
-                  <div className="relative z-10 w-10 h-10 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-sm shadow-lg mb-6">
+                  <div className="relative z-10 w-10 h-10 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-sm shadow-lg mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:shadow-blue-200">
                     {idx + 1}
                   </div>
-                  <div className="bg-white rounded-2xl p-6 shadow-card border border-gray-100 w-full mx-2 transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1">
-                    <span className="inline-block px-3 py-1 bg-brand-blue/10 text-brand-blue text-xs font-bold rounded-full mb-3">
+                  <div className="card-base w-full text-center group-hover:border-brand-blue/30">
+                    <span className="inline-block px-3 py-1 bg-brand-blue text-white text-[10px] font-bold rounded-full mb-3 tracking-wider">
                       {step.month}
                     </span>
-                    <h3 className="text-lg font-bold text-brand-dark mb-2">
+                    <h3 className="text-lg font-extrabold text-brand-dark mb-2 leading-snug">
                       {step.title}
                     </h3>
-                    <p className="text-sm text-gray-500 leading-relaxed">
+                    <p className="text-sm text-gray-500 leading-relaxed px-2">
                       {step.desc}
                     </p>
                   </div>
@@ -87,12 +87,12 @@ export default function Timeline() {
             {STEPS.map((step, idx) => (
               <div
                 key={step.month}
-                className={`flex gap-4 ${visible ? "animate-fade-in-up" : "opacity-0"}`}
+                className={`flex gap-4 group ${visible ? "animate-fade-in-up" : "opacity-0"}`}
                 style={{ animationDelay: `${idx * 200}ms` }}
               >
                 {/* Left: dot + line */}
                 <div className="flex flex-col items-center">
-                  <div className="w-8 h-8 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-xs shadow-lg flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-xs shadow-lg flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
                     {idx + 1}
                   </div>
                   {idx < STEPS.length - 1 && (
@@ -100,11 +100,11 @@ export default function Timeline() {
                   )}
                 </div>
                 {/* Right: content */}
-                <div className="bg-white rounded-2xl p-5 shadow-card border border-gray-100 flex-1 transition-all duration-300 hover:shadow-card-hover">
-                  <span className="inline-block px-3 py-1 bg-brand-blue/10 text-brand-blue text-xs font-bold rounded-full mb-2">
+                <div className="card-base p-5 flex-1 group-hover:border-brand-blue/30">
+                  <span className="inline-block px-3 py-1 bg-brand-blue text-white text-[10px] font-bold rounded-full mb-2 tracking-wider">
                     {step.month}
                   </span>
-                  <h3 className="text-base font-bold text-brand-dark mb-1">
+                  <h3 className="text-base font-extrabold text-brand-dark mb-1">
                     {step.title}
                   </h3>
                   <p className="text-sm text-gray-500 leading-relaxed">

@@ -63,10 +63,13 @@
   }
 
   .card-base {
-    @apply bg-white rounded-2xl border border-gray-200 p-6 transition-all duration-300;
+    @apply bg-white rounded-2xl border border-gray-200 p-6 h-full flex flex-col;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
 
   .card-base:hover {
-    @apply shadow-card-hover -translate-y-1;
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+    border-color: rgba(0,71,255,0.15);
   }
 }

@@ -3,9 +3,9 @@ import { ChevronDown } from "lucide-react";
 
 const FAQS = [
   {
-    question: "Je ne prends que le KBIS, pourquoi 2 000 € ?",
+    question: "Pourquoi ne pas simplement prendre un KBIS seul ?",
     answer:
-      "Vous ne payez pas 'juste un papier'. Vous investissez dans le temps d'un expert qui crée votre entreprise de A à Z (KBIS, SIRET, compte pro, déclarations) ET dans l'accès complet à notre écosystème : formation, recherche produit, site clé en main, et suivi personnalisé. C'est un accompagnement complet, pas un simple service administratif.",
+      "Parce qu'un document ne crée pas un business rentable. Vous n'achetez pas 'juste un papier'. Vous investissez dans l'expertise d'un pro qui bâtit votre structure de A à Z (KBIS, SIRET, compte pro, déclarations) ET vous ouvre les portes de notre écosystème complet : formation, recherche produit, boutique clé en main et suivi personnalisé. C'est un accompagnement vers la liberté, pas un simple service administratif.",
   },
   {
     question: "Et si le produit ne marche pas ?",

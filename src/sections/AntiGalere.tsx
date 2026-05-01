@@ -55,11 +55,12 @@ export default function AntiGalere() {
       <div className="section-container">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-2xl md:text-4xl font-bold text-brand-dark mb-4">
-            Pourquoi <span className="text-brand-blue">2 000 €</span> ?
+            Ce que d'autres ont mis{" "}
+            <span className="text-brand-blue">2 ans à construire seul</span>
           </h2>
           <p className="text-base md:text-lg text-gray-500 max-w-xl mx-auto">
-            Ce n'est pas un coût. C'est un investissement qui vous fait gagner des mois de galère.
-            Voici concrètement ce que vous obtenez :
+            Nous vous livrons un business clé en main : une 
+            <span className="font-semibold text-brand-dark"> expérience de 3 mois</span> pour un investissement unique.
           </p>
         </div>
 

@@ -70,8 +70,8 @@ module.exports = {
       },
       boxShadow: {
         xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-        card: "0 25px 60px rgba(0, 71, 255, 0.18), 0 12px 30px rgba(0, 0, 0, 0.08)",
-        "card-hover": "0 25px 60px rgba(0, 71, 255, 0.18), 0 12px 30px rgba(0, 0, 0, 0.08)",
+        card: "0 0 0 1px rgba(0,71,255,0.08), 0 8px 32px rgba(0, 71, 255, 0.20), 0 24px 64px rgba(0, 71, 255, 0.32), 0 48px 120px rgba(0, 71, 255, 0.18), 0 6px 20px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255,255,255,1)",
+        "card-hover": "0 0 0 1px rgba(0,71,255,0.12), 0 12px 48px rgba(0, 71, 255, 0.35), 0 32px 90px rgba(0, 71, 255, 0.45), 0 64px 140px rgba(0, 71, 255, 0.25), 0 10px 30px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255,255,255,1)",
       },
       keyframes: {
         "accordion-down": {
